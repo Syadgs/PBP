@@ -6,16 +6,67 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </head>
 <body>
+    <?php
+            if (isset($_POST['submit'])) {
+                // Validasi nama: tidak boleh kosong, hanya dapat berisi huruf dan spasi
+                $nama = test_input($_POST['nama']);
+                if (empty($nama)) {
+                    $error_nama = "Nama harus diisi";
+                } elseif (!preg_match("/^[a-zA-Z ]*$/", $nama)) {
+                    $error_nama = "Nama hanya dapat berisi huruf dan spasi";
+                }
+            
+                // Validasi email: tidak boleh kosong, format harus benar
+                $email = test_input($_POST['email']);
+                if ($email == '') {
+                    $error_email = "Email harus diisi";
+                } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    $error_email = "Format email tidak benar";
+                }
+            
+                // Validasi alamat: tidak boleh kosong
+                $alamat = test_input($_POST['alamat']);
+                if ($alamat == '') {
+                    $error_alamat = "Alamat harus diisi";
+                }
+            
+                // Validasi jenis kelamin: tidak boleh kosong
+                $jenis_kelamin = $_POST['jenis_kelamin'];
+                if ($jenis_kelamin == '') {
+                    $error_jenis_kelamin = "Jenis kelamin harus diisi";
+                }
+            
+                // Validasi kota: tidak boleh kosong
+                $kota = $_POST['kota'];
+                if ($kota == '' || $kota == 'kota') {
+                    $error_kota = "Kota harus diisi";
+                }
+            
+                // Validasi minat: tidak boleh kosong
+                $minat = $_POST['minat'];
+                if (empty($minat)) {
+                    $error_minat = "Peminatan harus dipilih";
+                }
+            function test_input($data) {
+                $data = trim($data);
+                $data = stripslashes($data);
+                $data = htmlspecialchars($data);
+                return $data;
+            }
+        }
+    ?>
     <div class="container mt-5 border rounded p-0">
     <div class="bg-secondary rounded-top p-2 text-white text-center">Form Mahasiswa</div>
-    <form method="get ">
+    <form method="POST" autocomplete="on" action="">
         <div class = "form-group m-2">
         <label for="nama">Nama:</label><br />
             <input type="text" class="form-control" id="nama" name="nama" maxlength="50">
+            <div class="error"><?php if(isset($error_nama)) echo $error_nama;?></div>
         </div>
         <div class="form-group m-2">
             <label for="email" class="label">Email:</label><br />
             <input type="email" class="form-control" id="email" name="email">
+            <div class="error"><?php if(isset($error_email)) echo $error_email;?></div>
         </div>
         <div class="form-group m-2">
             <label for="alamat" class="label">Alamat:</label><br />
@@ -69,55 +120,6 @@
     </form> 
     </div> 
     <div class="container">
-        <?php
-            if (isset($_POST['submit'])) {
-                // Validasi nama: tidak boleh kosong, hanya dapat berisi huruf dan spasi
-                $nama = test_input($_POST['nama']);
-                if (empty($nama)) {
-                    $error_nama = "Nama harus diisi";
-                } elseif (!preg_match("/^[a-zA-Z ]*$/", $nama)) {
-                    $error_nama = "Nama hanya dapat berisi huruf dan spasi";
-                }
-            
-                // Validasi email: tidak boleh kosong, format harus benar
-                $email = test_input($_POST['email']);
-                if ($email == '') {
-                    $error_email = "Email harus diisi";
-                } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                    $error_email = "Format email tidak benar";
-                }
-            
-                // Validasi alamat: tidak boleh kosong
-                $alamat = test_input($_POST['alamat']);
-                if ($alamat == '') {
-                    $error_alamat = "Alamat harus diisi";
-                }
-            
-                // Validasi jenis kelamin: tidak boleh kosong
-                $jenis_kelamin = $_POST['jenis_kelamin'];
-                if ($jenis_kelamin == '') {
-                    $error_jenis_kelamin = "Jenis kelamin harus diisi";
-                }
-            
-                // Validasi kota: tidak boleh kosong
-                $kota = $_POST['kota'];
-                if ($kota == '' || $kota == 'kota') {
-                    $error_kota = "Kota harus diisi";
-                }
-            
-                // Validasi minat: tidak boleh kosong
-                $minat = $_POST['minat'];
-                if (empty($minat)) {
-                    $error_minat = "Peminatan harus dipilih";
-                }
-            function test_input($data) {
-                $data = trim($data);
-                $data = stripslashes($data);
-                $data = htmlspecialchars($data);
-                return $data;
-            }
-            }
-            ?>
     </div>
 </body>
 </html>

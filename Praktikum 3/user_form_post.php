@@ -8,7 +8,7 @@
 <body>
     <div class="container mt-5 border rounded p-0">
     <div class="bg-secondary rounded-top p-2 text-white text-center">Form Mahasiswa</div>
-    <form method="get ">
+    <form method="POST" autocomplete="on" action="">
         <div class = "form-group m-2">
         <label for="nama">Nama:</label><br />
             <input type="text" class="form-control" id="nama" name="nama" maxlength="50">
